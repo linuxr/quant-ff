@@ -1,20 +1,26 @@
 # -*- coding=utf-8 -*-
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
 class Factor(ABC):
     name: str = ""
+    params: list = field(default_factory=lambda: [])
 
     @abstractmethod
     def signal(self, *args):
         pass
 
-    @abstractmethod
-    def get_parameter(self):
-        pass
+    def get_parameters(self):
+        if len(self.params) > 0:
+            return self.params
 
-    def get_factor(self):
-        pass
+        if self.name.upper() in ["ADOSC"]:
+            return [[3, 21], [5, 34], [8, 55], [13, 89]]
+
+        return [[3], [5], [8], [13], [21], [34], [55], [89]]
+
+    def set_parameters(self, params: list):
+        self.params = params
