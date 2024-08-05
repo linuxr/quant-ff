@@ -53,7 +53,7 @@ class ADXFactor(Factor):
         data[factor_name] = (
             abs(data["MDI"] - data["PDI"]) / (data["MDI"] + data["PDI"]) * 100
         )
-        data[factor_name] = cm.ma(data, "ADX", n)
+        data[factor_name] = cm.ma(data, factor_name, n)
 
         data = data.drop(
             columns=[
