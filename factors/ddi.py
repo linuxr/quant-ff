@@ -50,6 +50,7 @@ class DDIFactor(Factor):
                 "DMZ",
                 "DMF",
                 "DIZ",
+                "DIF",
             ]
         )
 
