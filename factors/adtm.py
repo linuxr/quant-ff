@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,13 +9,11 @@ from dataclasses import dataclass
 
 @dataclass
 class ADTMFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         通过比较开盘价往上涨的幅度和往下跌的幅度来衡量市场的人气
         """
-        data = args[0]
-        n = args[1][0]
-        factor_name = args[2]
+        n = para[0]
 
         data["ref-open"] = cm.ref(data, "open", 1)
         data["dtm"] = data.apply(
@@ -43,7 +42,7 @@ class ADTMFactor(Factor):
         data["sbm"] = cm.sum(data, "dbm", n)
         data["max_stm_sbm"] = data.apply(lambda d: max(d["stm"], d["sbm"]), axis=1)
 
-        data[factor_name] = (data["stm"] - data["sbm"]) / data["max_stm_sbm"]
+        data[self.name] = (data["stm"] - data["sbm"]) / data["max_stm_sbm"]
 
         data = data.drop(
             columns=[
