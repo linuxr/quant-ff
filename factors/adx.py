@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,13 +9,11 @@ from dataclasses import dataclass
 
 @dataclass
 class ADXFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         计算过程中的 DI+与 DI-指标用相邻两天的最高价之差与最低价之差来反映价格的变化趋势
         """
-        data = args[0]
-        n = args[1][0]
-        factor_name = args[2]
+        n = para[0]
 
         data["ref-high"] = cm.ref(data, "high", 1)
         data["ref-low"] = cm.ref(data, "low", 1)
@@ -50,10 +49,10 @@ class ADXFactor(Factor):
         data["DI-"] = data["ndm"] / data["tr"]
         data["PDI"] = data["DI+"] * 100 / data["tr"]
         data["MDI"] = data["DI-"] * 100 / data["tr"]
-        data[factor_name] = (
+        data[self.name] = (
             abs(data["MDI"] - data["PDI"]) / (data["MDI"] + data["PDI"]) * 100
         )
-        data[factor_name] = cm.ma(data, factor_name, n)
+        data[self.name] = cm.ma(data, self.name, n)
 
         data = data.drop(
             columns=[
