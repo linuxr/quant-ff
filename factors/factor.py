@@ -2,6 +2,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
+import pandas as pd
 
 
 @dataclass
@@ -10,7 +11,7 @@ class Factor(ABC):
     params: list = field(default_factory=lambda: [])
 
     @abstractmethod
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list = []):
         pass
 
     def get_parameters(self):

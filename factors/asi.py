@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,14 +9,12 @@ from dataclasses import dataclass
 
 @dataclass
 class ASIFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         对 SI 累计求和得到 ASI
         """
-        data = args[0]
-        n = args[1][0]
-        m = args[1][1]
-        factor_name = args[2]
+        n = para[0]
+        m = para[1]
 
         data["ref-close"] = cm.ref(data, N=1)
         data["ref-low"] = cm.ref(data, "low", N=1)
@@ -52,8 +51,8 @@ class ASIFactor(Factor):
             * data["k"]
             / data["m"]
         )
-        data[factor_name] = cm.cumsum(data, "SI")
-        data[f"{factor_name}MA"] = cm.ma(data, factor_name, m)
+        data[self.name] = cm.cumsum(data, "SI")
+        data[f"{self.name}MA"] = cm.ma(data, self.name, m)
 
         data = data.drop(
             columns=[
