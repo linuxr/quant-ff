@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,13 +9,11 @@ from dataclasses import dataclass
 
 @dataclass
 class DDIFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         用来比较向上波动和向下波动的比例
         """
-        data = args[0]
-        n = args[1][0]
-        factor_name = args[2]
+        n = para[0]
 
         data["hl"] = data["high"] + data["low"]
         data["ref-h"] = cm.ref(data, "high", 1)
@@ -37,7 +36,7 @@ class DDIFactor(Factor):
         data["DIF"] = cm.sum(data, "DMF", n) / (
             cm.sum(data, "DMZ", n) + cm.sum(data, "DMF", n)
         )
-        data[factor_name] = data["DIZ"] - data["DIF"]
+        data[self.name] = data["DIZ"] - data["DIF"]
 
         data = data.drop(
             columns=[

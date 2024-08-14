@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,14 +9,12 @@ from dataclasses import dataclass
 
 @dataclass
 class DOFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         平滑处理（双重移动平均）后的 RSI 指标
         """
-        data = args[0]
-        n = args[1][0]
-        m = args[1][1]
-        factor_name = args[2]
+        n = para[0]
+        m = para[1]
 
         data["ref-close"] = cm.ref(data, N=1)
         data["closeup"] = data.apply(
@@ -36,7 +35,7 @@ class DOFactor(Factor):
             100 * data["closeup-ma"] / (data["closeup-ma"] + data["closedown-ma"])
         )
         data["RSI-EMA"] = cm.ema(data, "RSI", n)
-        data[factor_name] = cm.ema(data, "RSI-EMA", m)
+        data[self.name] = cm.ema(data, "RSI-EMA", m)
 
         data = data.drop(
             columns=[
