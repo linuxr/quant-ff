@@ -2,6 +2,7 @@
 
 import common as cm
 import numpy as np
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -9,14 +10,12 @@ from dataclasses import dataclass
 
 @dataclass
 class FISHERFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         用来衡量当前价位于过去 N 天的最高价和最低价之间的位置
         """
-        data = args[0]
-        n = args[1][0]
-        param = args[1][1]
-        factor_name = args[2]
+        n = para[0]
+        param = para[1]
 
         data["price"] = (data["high"] + data["low"]) / 2
         data["price-change"] = 2 * (
@@ -34,10 +33,10 @@ class FISHERFactor(Factor):
         data["price-change"] = param * data["price-change"] + (1 - param) * cm.ref(
             data, "price-change", 1
         )
-        data[factor_name] = 0.5 * np.log(
+        data[self.name] = 0.5 * np.log(
             (1 + data["price-change"]) / (1 - data["price-change"])
         )
-        data[factor_name] = 0.5 * cm.ref(data, factor_name, 1)
+        data[self.name] = 0.5 * cm.ref(data, self.name, 1)
 
         data = data.drop(columns=["price", "price-change"])
 

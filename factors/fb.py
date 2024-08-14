@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,14 +9,12 @@ from dataclasses import dataclass
 
 @dataclass
 class FBFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         类似于布林带，都以价格的移动平均线为中轨，
         在中线上下浮动一定数值构造上下轨
         """
-        data = args[0]
-        n = args[1][0]
-        # factor_name = args[2]
+        n = para[0]
 
         data["ref-close"] = cm.ref(data, N=1)
         data["tr"] = data.apply(
