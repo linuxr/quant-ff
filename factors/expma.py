@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,14 +9,12 @@ from dataclasses import dataclass
 
 @dataclass
 class EXPMAFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         是简单移动平均的改进版，用于改善简单移动平均的滞后性问题
         """
-        data = args[0]
-        n1 = args[1][0]
-        n2 = args[1][1]
-        # factor_name = args[2]
+        n1 = para[0]
+        n2 = para[1]
 
         data["EMA1"] = cm.ema(data, N=n1)
         data["EMA2"] = cm.ema(data, N=n2)

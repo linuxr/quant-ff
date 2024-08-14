@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,13 +9,10 @@ from dataclasses import dataclass
 
 @dataclass
 class EMVFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         综合考虑了成交量和价格（中间价）的变化
         """
-        data = args[0]
-        # n = args[1][0]
-        factor_name = args[2]
 
         VOLUME_DIVISOR = 1000000
 
@@ -27,7 +25,7 @@ class EMVFactor(Factor):
             data["volume"] / VOLUME_DIVISOR / (data["high"] - data["low"])
         )
 
-        data[factor_name] = data["mid-pt-move"] / data["box-ratio"]
+        data[self.name] = data["mid-pt-move"] / data["box-ratio"]
 
         data = data.drop(
             columns=[
