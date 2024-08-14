@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,17 +9,15 @@ from dataclasses import dataclass
 
 @dataclass
 class CLVFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         衡量收盘价在最低价和最高价之间的位置
         """
-        data = args[0]
-        n = args[1][0]
-        factor_name = args[2]
+        n = para[0]
 
-        data[factor_name] = (2 * data["close"] - data["low"] - data["close"]) / (
+        data[self.name] = (2 * data["close"] - data["low"] - data["close"]) / (
             data["high"] - data["low"]
         )
-        data[f"{factor_name}MA"] = cm.ma(data, factor_name, n)
+        data[f"{self.name}MA"] = cm.ma(data, self.name, n)
 
         return data
