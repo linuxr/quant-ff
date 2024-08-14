@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,13 +9,10 @@ from dataclasses import dataclass
 
 @dataclass
 class KSTFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         结合了不同时间长度的 ROC 指标
         """
-        data = args[0]
-        # n = args[1][0]
-        factor_name = args[2]
 
         data["ref-close10"] = cm.ref(data, N=10)
         data["roc-ma1"] = data["close"] - data["ref-close10"]
@@ -38,7 +36,7 @@ class KSTFactor(Factor):
             + data["roc-ma3"] * 3
             + data["roc-ma4"] * 4
         )
-        data[factor_name] = cm.ma(data, "kst-ind", 9)
+        data[self.name] = cm.ma(data, "kst-ind", 9)
 
         data = data.drop(
             columns=[

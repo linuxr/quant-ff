@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,14 +9,12 @@ from dataclasses import dataclass
 
 @dataclass
 class KDJDFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         可以看作 KDJ 的变形
         """
-        data = args[0]
-        n = args[1][0]
-        m = args[1][1]
-        # factor_name = args[2]
+        n = para[0]
+        m = para[1]
 
         data["low-n"] = cm.min(data, "low", n)
         data["high-n"] = cm.max(data, "high", n)

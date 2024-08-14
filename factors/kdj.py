@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,13 +9,11 @@ from dataclasses import dataclass
 
 @dataclass
 class KDJFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         用来衡量当前收盘价在过去 N 天的最低价与最高价之间的位置
         """
-        data = args[0]
-        n = args[1][0]
-        # factor_name = args[2]
+        n = para[0]
 
         data["low-n"] = cm.min(data, "low", n)
         data["high-n"] = cm.max(data, "high", n)

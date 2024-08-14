@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,14 +9,12 @@ from dataclasses import dataclass
 
 @dataclass
 class KCFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         与布林带类似，都是用价格的移动平均构造中轨，
         不同的是表示波幅的方法，这里用 ATR 来作为波幅构造上下轨
         """
-        data = args[0]
-        n = args[1][0]
-        # factor_name = args[2]
+        n = para[0]
 
         data["ref-close"] = cm.ref(data, N=1)
         data["ref-low"] = cm.ref(data, "low", N=1)
