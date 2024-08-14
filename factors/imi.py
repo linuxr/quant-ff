@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,14 +9,12 @@ from dataclasses import dataclass
 
 @dataclass
 class IMIFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         与 RSI 很相似。
         其区别在于，IMI 计算过程中使用的是收盘价和开盘价
         """
-        data = args[0]
-        n = args[1][0]
-        factor_name = args[2]
+        n = para[0]
 
         data["INC"] = data.apply(
             lambda z: (z["close"] - z["open"] if z["close"] > z["open"] else 0),
@@ -28,7 +27,7 @@ class IMIFactor(Factor):
             axis=1,
         )
         data["DEC"] = cm.sum(data, "DEC", n)
-        data[factor_name] = data["INC"] / (data["INC"] + data["DEC"])
+        data[self.name] = data["INC"] / (data["INC"] + data["DEC"])
 
         data = data.drop(columns=["INC", "DEC"])
 
