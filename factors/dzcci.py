@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,15 +9,13 @@ from dataclasses import dataclass
 
 @dataclass
 class DZCCIFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         根据前段时间CCI 的变化来动态地确定阈值，从而产生交易信号
         """
-        data = args[0]
-        n = args[1][0]
-        m = args[1][1]
-        param = args[1][2]
-        factor_name = args[2]
+        n = para[0]
+        m = para[1]
+        param = para[2]
 
         data["tp"] = (data["high"] + data["low"] + data["close"]) / 3
         data["ma"] = cm.ma(data, "tp", n)
@@ -26,7 +25,7 @@ class DZCCIFactor(Factor):
         data["CCI-MIDDLE"] = cm.ma(data, "CCI", n)
         data["CCI-UPPER"] = data["CCI-MIDDLE"] + param * cm.std(data, "CCI", n)
         data["CCI-LOWER"] = data["CCI-MIDDLE"] - param * cm.std(data, "CCI", n)
-        data[factor_name] = cm.ma(data, "CCI", m)
+        data[self.name] = cm.ma(data, "CCI", m)
 
         data = data.drop(
             columns=[

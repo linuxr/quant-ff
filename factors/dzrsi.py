@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
 import common as cm
+import pandas as pd
 
 from factors import Factor
 from dataclasses import dataclass
@@ -8,15 +9,13 @@ from dataclasses import dataclass
 
 @dataclass
 class DZRSIFactor(Factor):
-    def signal(self, *args):
+    def signal(self, data: pd.DataFrame, para: list):
         """
         动态的 RSI，原理与 DZCCI 相同，计算公式为 DZCCI 中的CCI 替换为 RSI
         """
-        data = args[0]
-        n = args[1][0]
-        m = args[1][1]
-        param = args[1][2]
-        factor_name = args[2]
+        n = para[0]
+        m = para[1]
+        param = para[2]
 
         data["ref-close"] = cm.ref(data, N=1)
         data["closeup"] = data.apply(
@@ -39,7 +38,7 @@ class DZRSIFactor(Factor):
         data["RSI-MIDDLE"] = cm.ma(data, "RSI", n)
         data["RSI-UPPER"] = data["RSI-MIDDLE"] + param * cm.std(data, "RSI", n)
         data["RSI-LOWER"] = data["RSI-MIDDLE"] - param * cm.std(data, "RSI", n)
-        data[factor_name] = cm.ma(data, "RSI", m)
+        data[self.name] = cm.ma(data, "RSI", m)
 
         data = data.drop(
             columns=[
