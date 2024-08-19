@@ -23,7 +23,7 @@ class TIIFactor(Factor):
         data["sumpos"] = cm.sum(data, "devpos", m)
         data["sumneg"] = cm.sum(data, "devneg", m)
         data[self.name] = 100 * data["sumpos"] / (data["sumpos"] + data["sumneg"])
-        data["SIGNAL"] = cm.ema(data, self.name, n2)
+        data[f"{self.name}-SIGNAL"] = cm.ema(data, self.name, n2)
 
         data = data.drop(columns=["dev", "devpos", "devneg", "sumpos", "sumneg"])
 
