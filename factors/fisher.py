@@ -1,10 +1,10 @@
 # -*- coding=utf-8 -*-
 
-import common as cm
+import quant_ff.common as cm
 import numpy as np
 import pandas as pd
 
-from factors import Factor
+from quant_ff.factors import Factor
 from dataclasses import dataclass
 
 

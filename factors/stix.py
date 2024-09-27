@@ -3,7 +3,7 @@
 # import common as cm
 import pandas as pd
 
-from factors import Factor
+from quant_ff.factors import Factor
 from dataclasses import dataclass
 
 
