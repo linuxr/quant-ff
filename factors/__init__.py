@@ -46,82 +46,84 @@ all = ["Factor"]
 
 
 def get_factor(name: str) -> Factor:
+    print(f"name={name}")
+    print("=========================")
     match name.upper():
         case "ADOSC":
-            return ADOSCFactor(name=name.upper())
+            return ADOSCFactor(name=name)
         case "ADTM":
-            return ADTMFactor(name=name.upper())
+            return ADTMFactor(name=name)
         case "ADX":
-            return ADXFactor(name=name.upper())
+            return ADXFactor(name=name)
         case "ADXR":
-            return ADXRFactor(name=name.upper())
+            return ADXRFactor(name=name)
         case "AMV":
-            return AMVFactor(name=name.upper())
+            return AMVFactor(name=name)
         case "APZ":
-            return APZFactor(name=name.upper())
+            return APZFactor(name=name)
         case "AR":
-            return ARFactor(name=name.upper())
+            return ARFactor(name=name)
         case "ARRONDOWN":
-            return ARRONDOWNFactor(name=name.upper())
+            return ARRONDOWNFactor(name=name)
         case "ARRONUP":
-            return ARRONUPFactor(name=name.upper())
+            return ARRONUPFactor(name=name)
         case "ASI":
-            return ASIFactor(name=name.upper())
+            return ASIFactor(name=name)
         case "ATR":
-            return ATRFactor(name=name.upper())
+            return ATRFactor(name=name)
         case "AWS":
-            return AWSFactor(name=name.upper())
+            return AWSFactor(name=name)
         case "BBI":
-            return BBIFactor(name=name.upper())
+            return BBIFactor(name=name)
         case "BIAS":
-            return BIASFactor(name=name.upper())
+            return BIASFactor(name=name)
         case "BIAS36":
-            return BIAS36Factor(name=name.upper())
+            return BIAS36Factor(name=name)
         case "BIASVOL":
-            return BIASVOLFactor(name=name.upper())
+            return BIASVOLFactor(name=name)
         case "BOP":
-            return BOPFactor(name=name.upper())
+            return BOPFactor(name=name)
         case "BR":
-            return BRFactor(name=name.upper())
+            return BRFactor(name=name)
         case "CCI":
-            return CCIFactor(name=name.upper())
+            return CCIFactor(name=name)
         case "CCIV3":
-            return CCIV3Factor(name=name.upper())
+            return CCIV3Factor(name=name)
         case "CLV":
-            return CLVFactor(name=name.upper())
+            return CLVFactor(name=name)
         case "CMF":
-            return CMFFactor(name=name.upper())
+            return CMFFactor(name=name)
         case "CMO":
-            return CMOFactor(name=name.upper())
+            return CMOFactor(name=name)
         case "COPP":
-            return COPPFactor(name=name.upper())
+            return COPPFactor(name=name)
         case "CR":
-            return CRFactor(name=name.upper())
+            return CRFactor(name=name)
         case "CV":
-            return CVFactor(name=name.upper())
+            return CVFactor(name=name)
         case "DBCD":
-            return DBCDFactor(name=name.upper())
+            return DBCDFactor(name=name)
         case "DC":
-            return DCFactor(name=name.upper())
+            return DCFactor(name=name)
         case "DDI":
-            return DDIFactor(name=name.upper())
+            return DDIFactor(name=name)
         case "DEMA":
-            return DEMAFactor(name=name.upper())
+            return DEMAFactor(name=name)
         case "DEMAKDER":
-            return DemakderFactor(name=name.upper())
+            return DemakderFactor(name=name)
         case "DMA":
-            return DMAFactor(name=name.upper())
+            return DMAFactor(name=name)
         case "DO":
-            return DOFactor(name=name.upper())
+            return DOFactor(name=name)
         case "DPO":
-            return DPOFactor(name=name.upper())
+            return DPOFactor(name=name)
         case "DZCCI":
-            return DZCCIFactor(name=name.upper())
+            return DZCCIFactor(name=name)
         case "DZRSI":
-            return DZRSIFactor(name=name.upper())
+            return DZRSIFactor(name=name)
         case "VOLUME":
-            return VOLUMEFactor(name=name.upper())
+            return VOLUMEFactor(name=name)
         case "VOLUMESTD":
-            return VOLUMESTDFactor(name=name.upper())
+            return VOLUMESTDFactor(name=name)
         case _:
-            return Factor(name=name.upper())
+            return Factor(name=name)

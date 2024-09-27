@@ -8,6 +8,7 @@ import pandas as pd
 @dataclass
 class Factor(ABC):
     name: str = ""
+    factor_name: str = ""
     params: list = field(default_factory=lambda: [])
 
     @abstractmethod

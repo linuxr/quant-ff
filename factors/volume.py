@@ -11,10 +11,9 @@ from dataclasses import dataclass
 class VOLUMEFactor(Factor):
     def signal(self, data: pd.DataFrame, para: list):
         n = para[0]
+        self.factor_name = f"{self.name}_{str(n)}"
 
-        n = para[0]
-
-        data[self.name] = data["quote_volume"].rolling(n, min_periods=1).sum()
+        data[self.factor_name] = data["quote_volume"].rolling(n, min_periods=1).sum()
         return data
 
 
@@ -23,7 +22,10 @@ class VOLUMESTDFactor(Factor):
     def signal(self, data: pd.DataFrame, para: list):
         # VolumeStd
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
-        data[self.name] = data["quote_volume"].rolling(n, min_periods=1).std(ddof=0)
+        data[self.factor_name] = (
+            data["quote_volume"].rolling(n, min_periods=1).std(ddof=0)
+        )
 
         return data

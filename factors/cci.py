@@ -14,12 +14,13 @@ class CCIFactor(Factor):
         衡量典型价格（最高价、最低价和收盘价的均值）与其一段时间的移动平均的偏离程度
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["tp"] = (data["high"] + data["low"] + data["close"]) / 3
         data["ma"] = cm.ma(data, "tp", n)
         data["tp-ma"] = abs(data["tp"] - data["ma"])
         data["md"] = cm.ma(data, "tp-ma", n)
-        data[self.name] = (data["tp"] - data["ma"]) / (0.015 * data["md"])
+        data[self.factor_name] = (data["tp"] - data["ma"]) / (0.015 * data["md"])
 
         data = data.drop(columns=["tp", "ma", "tp-ma", "md"])
 
@@ -31,6 +32,7 @@ class CCIV3Factor(Factor):
     def signal(self, data: pd.DataFrame, para: list):
         # Cci因子魔改的第三个版本，参考自《中性5期船队因子库》: https://bbs.quantclass.cn/thread/13472
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         oma = data["open"].ewm(span=n, adjust=False).mean()
         hma = data["high"].ewm(span=n, adjust=False).mean()
@@ -39,6 +41,6 @@ class CCIV3Factor(Factor):
         tp = (oma + hma + lma + cma) / 4
         ma = tp.ewm(span=n, adjust=False).mean()
         md = (cma - ma).abs().ewm(span=n, adjust=False).mean()
-        data[self.name] = (tp - ma) / md
+        data[self.factor_name] = (tp - ma) / md
 
         return data
