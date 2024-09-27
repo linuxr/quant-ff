@@ -4,7 +4,7 @@ from quant_ff.filters.Filter import Filter
 from quant_ff.filters.TakerBuy import TakerBuy
 from quant_ff.filters.ZhangDieFuAbsMax import ZhangDieFuAbsMax
 
-__all__ = ["Filter", "TakerBuy", "ZhangDieFuAbsMax"]
+__all__ = ["Filter"]
 
 
 def get_filter(name: str) -> Filter:

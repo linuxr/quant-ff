@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Demakderactor(Factor):
+class DemakderFactor(Factor):
     def signal(self, data: pd.DataFrame, para: list):
         """
         一个在外汇交易中用到的摆荡类技术指标
