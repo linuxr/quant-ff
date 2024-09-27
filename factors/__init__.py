@@ -21,7 +21,7 @@ from quant_ff.factors.biasvol import BIASVOLFactor
 from quant_ff.factors.bop import BOPFactor
 from quant_ff.factors.br import BRFactor
 
-from quant_ff.factors.cci import CCIFactor
+from quant_ff.factors.cci import CCIFactor, CCIV3Factor
 from quant_ff.factors.clv import CLVFactor
 from quant_ff.factors.cmf import CMFFactor
 from quant_ff.factors.cmo import CMOFactor
@@ -39,6 +39,8 @@ from quant_ff.factors.do import DOFactor
 from quant_ff.factors.dpo import DPOFactor
 from quant_ff.factors.dzcci import DZCCIFactor
 from quant_ff.factors.dzrsi import DZRSIFactor
+
+from quant_ff.factors.volume import VOLUMEFactor, VOLUMESTDFactor
 
 all = ["Factor"]
 
@@ -83,6 +85,8 @@ def get_factor(name: str) -> Factor:
             return BRFactor(name=name.upper())
         case "CCI":
             return CCIFactor(name=name.upper())
+        case "CCIV3":
+            return CCIV3Factor(name=name.upper())
         case "CLV":
             return CLVFactor(name=name.upper())
         case "CMF":
@@ -115,5 +119,9 @@ def get_factor(name: str) -> Factor:
             return DZCCIFactor(name=name.upper())
         case "DZRSI":
             return DZRSIFactor(name=name.upper())
+        case "VOLUME":
+            return VOLUMEFactor(name=name.upper())
+        case "VOLUMESTD":
+            return VOLUMESTDFactor(name=name.upper())
         case _:
             return Factor(name=name.upper())
