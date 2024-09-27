@@ -1,7 +1,7 @@
 # -*- coding=utf-8 -*-
 
-from factors.factor import Factor
-from factors.adosc import ADOSCFactor
+from quant_ff.factors.factor import Factor
+from quant_ff.factors.adosc import ADOSCFactor
 
 all = ["Factor"]
 
