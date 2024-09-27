@@ -16,6 +16,7 @@ class MFIFactor(Factor):
         且其是对 MF 求和而不是收盘价的变化值
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["t-p"] = (data["high"] + data["low"] + data["close"]) / 3
         data["mf"] = data["t-p"] * data["volume"]
@@ -31,7 +32,7 @@ class MFIFactor(Factor):
             axis=1,
         )
         data["mf-neg"] = cm.sum(data, "mf-neg", n)
-        data[self.name] = 100 - 100 / (1 + data["mf-pos"] / data["mf-neg"])
+        data[self.factor_name] = 100 - 100 / (1 + data["mf-pos"] / data["mf-neg"])
 
         data = data.drop(
             columns=[

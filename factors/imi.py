@@ -15,6 +15,7 @@ class IMIFactor(Factor):
         其区别在于，IMI 计算过程中使用的是收盘价和开盘价
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["INC"] = data.apply(
             lambda z: (z["close"] - z["open"] if z["close"] > z["open"] else 0),
@@ -27,7 +28,7 @@ class IMIFactor(Factor):
             axis=1,
         )
         data["DEC"] = cm.sum(data, "DEC", n)
-        data[self.name] = data["INC"] / (data["INC"] + data["DEC"])
+        data[self.factor_name] = data["INC"] / (data["INC"] + data["DEC"])
 
         data = data.drop(columns=["INC", "DEC"])
 

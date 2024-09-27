@@ -14,7 +14,8 @@ class MAAMTFactor(Factor):
         成交额的移动平均线
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
-        data[self.name] = cm.ma(data, "quote_volume", n)
+        data[self.factor_name] = cm.ma(data, "quote_volume", n)
 
         return data

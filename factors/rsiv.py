@@ -14,6 +14,7 @@ class RSIVFactor(Factor):
         计算方式与 RSI 相同，只是把其中的价格变化 CLOSE REF(CLOSE,1)替换成了成交量 VOLUME
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-close"] = cm.ref(data, N=1)
         data["volup"] = data.apply(
@@ -26,7 +27,7 @@ class RSIVFactor(Factor):
         )
         data["sumup"] = cm.sum(data, "volup", n)
         data["sumdown"] = cm.sum(data, "voldown", n)
-        data[self.name] = 100 * data["sumup"] / (data["sumup"] + data["sumdown"])
+        data[self.factor_name] = 100 * data["sumup"] / (data["sumup"] + data["sumdown"])
 
         data = data.drop(
             columns=[

@@ -14,7 +14,8 @@ class HMAFactor(Factor):
         简单移动平均线把收盘价替换为最高价
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
-        data[self.name] = cm.ma(data, "high", n)
+        data[self.factor_name] = cm.ma(data, "high", n)
 
         return data

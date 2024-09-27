@@ -14,10 +14,11 @@ class ARFactor(Factor):
         衡量开盘价在最高价、最低价之间的位置
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["high-open"] = data["high"] - data["open"]
         data["open-low"] = data["open"] - data["low"]
-        data[self.name] = (
+        data[self.factor_name] = (
             100 * cm.sum(data, "high-open", n) / cm.sum(data, "open-low", n)
         )
 

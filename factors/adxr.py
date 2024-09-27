@@ -14,6 +14,7 @@ class ADXRFactor(Factor):
         ADX 指标与 N 天前的 ADX 指标的均值
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-high"] = cm.ref(data, "high", 1)
         data["ref-low"] = cm.ref(data, "low", 1)
@@ -73,6 +74,6 @@ class ADXRFactor(Factor):
             ]
         )
 
-        data[self.name] = data["ADX"] - cm.ref(data, "ADX", n)
+        data[self.factor_name] = data["ADX"] - cm.ref(data, "ADX", n)
 
         return data

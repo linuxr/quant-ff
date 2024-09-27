@@ -14,13 +14,14 @@ class CMFFactor(Factor):
         用 CLV 对成交量进行加权
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["tmp"] = (
             ((data["close"] - data["low"]) - (data["high"] - data["close"]))
             * data["volume"]
             / (data["high"] - data["low"])
         )
-        data[self.name] = cm.sum(data, "tmp", n) / cm.sum(data, "volume", n)
+        data[self.factor_name] = cm.sum(data, "tmp", n) / cm.sum(data, "volume", n)
 
         data = data.drop(columns=["tmp"])
 

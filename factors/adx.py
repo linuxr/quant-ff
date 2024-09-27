@@ -14,6 +14,7 @@ class ADXFactor(Factor):
         计算过程中的 DI+与 DI-指标用相邻两天的最高价之差与最低价之差来反映价格的变化趋势
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-high"] = cm.ref(data, "high", 1)
         data["ref-low"] = cm.ref(data, "low", 1)
@@ -52,7 +53,7 @@ class ADXFactor(Factor):
         data[self.name] = (
             abs(data["MDI"] - data["PDI"]) / (data["MDI"] + data["PDI"]) * 100
         )
-        data[self.name] = cm.ma(data, self.name, n)
+        data[self.factor_name] = cm.ma(data, self.name, n)
 
         data = data.drop(
             columns=[

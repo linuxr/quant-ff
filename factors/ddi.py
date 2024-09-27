@@ -14,6 +14,7 @@ class DDIFactor(Factor):
         用来比较向上波动和向下波动的比例
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["hl"] = data["high"] + data["low"]
         data["ref-h"] = cm.ref(data, "high", 1)
@@ -36,7 +37,7 @@ class DDIFactor(Factor):
         data["DIF"] = cm.sum(data, "DMF", n) / (
             cm.sum(data, "DMZ", n) + cm.sum(data, "DMF", n)
         )
-        data[self.name] = data["DIZ"] - data["DIF"]
+        data[self.factor_name] = data["DIZ"] - data["DIF"]
 
         data = data.drop(
             columns=[

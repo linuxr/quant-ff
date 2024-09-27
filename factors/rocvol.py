@@ -14,9 +14,12 @@ class ROCVOLFactor(Factor):
         ROC 的成交量版本
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-vol-n"] = cm.ref(data, "volume", n)
-        data[self.name] = (data["volume"] - data["ref-vol-n"]) / data["ref-vol-n"]
+        data[self.factor_name] = (data["volume"] - data["ref-vol-n"]) / data[
+            "ref-vol-n"
+        ]
 
         data = data.drop(columns=["ref-vol-n"])
 

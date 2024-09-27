@@ -14,8 +14,9 @@ class BIASVOLFactor(Factor):
         BIAS 指标的成交量版本
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
-        data[self.name] = (data["volume"] - cm.ma(data, "volume", n)) / cm.ma(
+        data[self.factor_name] = (data["volume"] - cm.ma(data, "volume", n)) / cm.ma(
             data, "volume", n
         )
 

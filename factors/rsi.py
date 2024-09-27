@@ -14,6 +14,7 @@ class RSIFactor(Factor):
         反映一段时间内平均收益与平均亏损的对比
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-close"] = cm.ref(data, N=1)
         data["closeup"] = data.apply(
@@ -30,7 +31,7 @@ class RSIFactor(Factor):
         )
         data["closeup-ma"] = cm.sma(data, "closeup", N=n, M=1)
         data["closedown-ma"] = cm.sma(data, "closedown", N=n, M=1)
-        data[self.name] = (
+        data[self.factor_name] = (
             100 * data["closeup-ma"] / (data["closeup-ma"] + data["closedown-ma"])
         )
 

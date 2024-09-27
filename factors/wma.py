@@ -14,12 +14,15 @@ class WMAFactor(Factor):
         加权移动平均
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
-        data[self.name] = n * data["close"]
+        data[self.factor_name] = n * data["close"]
         for i in range(1, n):
-            data[self.name] = data[self.name] + (n - i) * cm.ref(data, N=i)
+            data[self.factor_name] = data[self.factor_name] + (n - i) * cm.ref(
+                data, N=i
+            )
 
         s = n * (n + 1) // 2
-        data[self.name] = data[self.name] / s
+        data[self.factor_name] = data[self.factor_name] / s
 
         return data

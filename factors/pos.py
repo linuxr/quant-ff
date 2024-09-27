@@ -14,12 +14,13 @@ class POSFactor(Factor):
         衡量当前的 N 天收益率在过去 N 天的 N 天收益率最大值和最小值之间的位置
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-close"] = cm.ref(data, N=n)
         data["price"] = (data["close"] - data["ref-close"]) / data["ref-close"]
         data["price-min"] = cm.min(data, "price", n)
         data["price-max"] = cm.max(data, "price", n)
-        data[self.name] = (data["price"] - data["price-min"]) / (
+        data[self.factor_name] = (data["price"] - data["price-min"]) / (
             data["price-max"] - data["price-min"]
         )
 

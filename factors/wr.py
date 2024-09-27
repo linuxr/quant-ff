@@ -15,10 +15,13 @@ class WRFactor(Factor):
         WR指标用来衡量市场的强弱和超买超卖状态
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["h"] = cm.max(data, "high", n)
         data["l"] = cm.min(data, "low", n)
-        data[self.name] = 100 * (data["h"] - data["close"]) / (data["h"] - data["l"])
+        data[self.factor_name] = (
+            100 * (data["h"] - data["close"]) / (data["h"] - data["l"])
+        )
 
         data = data.drop(columns=["h", "l"])
 

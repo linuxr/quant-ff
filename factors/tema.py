@@ -14,10 +14,11 @@ class TEMAFactor(Factor):
         结合了单重、双重和三重的 EMA，相比于一般均线延迟性较低
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ema-c"] = cm.ema(data, N=n)
         data["ema-cc"] = cm.ema(data, "ema-c", n)
-        data[self.name] = (
+        data[self.factor_name] = (
             3 * data["ema-c"] - 3 * data["ema-cc"] + cm.ema(data, "ema-cc", n)
         )
 

@@ -14,6 +14,7 @@ class VRFactor(Factor):
         用过去 N 日股价上升日成交量与下降日成交量的比值来衡量多空力量对比
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-close"] = cm.ref(data, N=1)
         data["av"] = data.apply(
@@ -32,7 +33,7 @@ class VRFactor(Factor):
         data["avs"] = cm.sum(data, "av", n)
         data["bvs"] = cm.sum(data, "bv", n)
         data["cvs"] = cm.sum(data, "cv", n)
-        data[self.name] = (data["avs"] + data["cvs"] / 2) / (
+        data[self.factor_name] = (data["avs"] + data["cvs"] / 2) / (
             data["bvs"] + data["cvs"] / 2
         )
 

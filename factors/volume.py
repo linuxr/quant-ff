@@ -11,7 +11,7 @@ from dataclasses import dataclass
 class VOLUMEFactor(Factor):
     def signal(self, data: pd.DataFrame, para: list):
         n = para[0]
-        self.factor_name = f"{self.name}_{str(n)}"
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data[self.factor_name] = data["quote_volume"].rolling(n, min_periods=1).sum()
         return data

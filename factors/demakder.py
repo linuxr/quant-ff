@@ -14,6 +14,7 @@ class DemakderFactor(Factor):
         一个在外汇交易中用到的摆荡类技术指标
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-high"] = cm.ref(data, "high", 1)
         data["Demax"] = data["high"] - data["ref-high"]
@@ -22,7 +23,7 @@ class DemakderFactor(Factor):
         data["ref-low"] = cm.ref(data, "low", 1)
         data["Demin"] = data["ref-low"] - data["low"]
         data["Demin"] = data["Demin"].apply(lambda z: z if z > 0 else 0)
-        data[self.name] = cm.ma(data, "Demax", n) / (
+        data[self.factor_name] = cm.ma(data, "Demax", n) / (
             cm.ma(data, "Demax", n) + cm.ma(data, "Demin", n)
         )
 

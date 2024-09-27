@@ -14,6 +14,7 @@ class TMFFactor(Factor):
         和 CMF 指标类似，都是用价格对成交量加权
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-close"] = cm.ref(data, N=1)
         data["high-t"] = data.apply(
@@ -24,13 +25,13 @@ class TMFFactor(Factor):
             lambda z: min(z["low"], z["ref-close"]),
             axis=1,
         )
-        data[self.name] = (
+        data[self.factor_name] = (
             data["volume"]
             * (2 * data["close"] - data["high-t"] - data["low-t"])
             / (data["high-t"] - data["low-t"])
         )
-        data[self.name] = cm.ema(data, self.name, n)
-        data[self.name] = data[self.name] / cm.ema(data, "volume", n)
+        data[self.factor_name] = cm.ema(data, self.factor_name, n)
+        data[self.factor_name] = data[self.factor_name] / cm.ema(data, "volume", n)
 
         data = data.drop(columns=["ref-close", "high-t", "low-t"])
 

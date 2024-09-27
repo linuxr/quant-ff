@@ -14,7 +14,8 @@ class MTMFactor(Factor):
         用当天价格与 N 天前价格的差值来衡量价格的动量
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
-        data[self.name] = data["close"] - cm.ref(data, N=n)
+        data[self.factor_name] = data["close"] - cm.ref(data, N=n)
 
         return data

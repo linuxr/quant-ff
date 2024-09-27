@@ -14,9 +14,10 @@ class DEMAFactor(Factor):
         结合了单重 EMA 和双重 EMA，在保证平滑性的同时减少滞后性
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["EMA"] = cm.ema(data, N=n)
-        data[self.name] = 2 * data["EMA"] - cm.ema(data, "EMA", n)
+        data[self.factor_name] = 2 * data["EMA"] - cm.ema(data, "EMA", n)
 
         data = data.drop(columns=["EMA"])
 

@@ -14,7 +14,10 @@ class BIASFactor(Factor):
         衡量收盘价与移动平均线之间的差距
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
-        data[self.name] = 100 * (data["close"] - cm.ma(data, N=n)) / cm.ma(data, N=n)
+        data[self.factor_name] = (
+            100 * (data["close"] - cm.ma(data, N=n)) / cm.ma(data, N=n)
+        )
 
         return data

@@ -14,11 +14,12 @@ class BRFactor(Factor):
         衡量昨日收盘价在今日最高价、最低价之间的位置
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-close"] = cm.ref(data, N=1)
         data["high-refclose"] = data["high"] - data["ref-close"]
         data["refclose-low"] = data["ref-close"] - data["low"]
-        data[self.name] = (
+        data[self.factor_name] = (
             100 * cm.sum(data, "high-refclose", n) / cm.sum(data, "refclose-low", n)
         )
 

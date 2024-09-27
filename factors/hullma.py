@@ -14,12 +14,13 @@ class HULLMAFactor(Factor):
         均线的一种，相比于普通均线有着更低的延迟性
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["X"] = 2 * cm.ema(data, N=n // 2) - cm.ema(data, N=n)
 
         import math
 
-        data[self.name] = cm.ema(data, "X", round(math.sqrt(n)))
+        data[self.fctor_name] = cm.ema(data, "X", round(math.sqrt(n)))
 
         data = data.drop(columns=["X"])
 

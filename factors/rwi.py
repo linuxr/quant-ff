@@ -15,6 +15,7 @@ class RWIFactor(Factor):
         对一段时间股票的随机漫步区间与真实运动区间进行比较以判断股票价格的走势
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-close"] = cm.ref(data, N=1)
         data["abs1"] = abs(data["high"] - data["low"])
@@ -26,10 +27,10 @@ class RWIFactor(Factor):
         )
 
         data["atr"] = cm.ma(data, "tr", n)
-        data[f"{self.name}-HIGH"] = (data["high"] - cm.ref(data, "low", 1)) / (
+        data[f"{self.factor_name}-HIGH"] = (data["high"] - cm.ref(data, "low", 1)) / (
             data["atr"] * math.sqrt(n)
         )
-        data[f"{self.name}-LOW"] = (cm.ref(data, "high", 1) - data["low"]) / (
+        data[f"{self.factor_name}-LOW"] = (cm.ref(data, "high", 1) - data["low"]) / (
             data["atr"] * math.sqrt(n)
         )
 

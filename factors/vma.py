@@ -14,9 +14,10 @@ class VMAFactor(Factor):
         简单移动平均把收盘价替换为最高价、最低价、开盘价和收盘价的平均值
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["PRICE"] = (data["high"] + data["low"] + data["open"] + data["close"]) / 4
-        data[self.name] = cm.ma(data, "PRICE", n)
+        data[self.factor_name] = cm.ma(data, "PRICE", n)
 
         data = data.drop(columns=["PRICE"])
 

@@ -14,6 +14,7 @@ class ADTMFactor(Factor):
         通过比较开盘价往上涨的幅度和往下跌的幅度来衡量市场的人气
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-open"] = cm.ref(data, "open", 1)
         data["dtm"] = data.apply(
@@ -42,7 +43,7 @@ class ADTMFactor(Factor):
         data["sbm"] = cm.sum(data, "dbm", n)
         data["max_stm_sbm"] = data.apply(lambda d: max(d["stm"], d["sbm"]), axis=1)
 
-        data[self.name] = (data["stm"] - data["sbm"]) / data["max_stm_sbm"]
+        data[self.factor_name] = (data["stm"] - data["sbm"]) / data["max_stm_sbm"]
 
         data = data.drop(
             columns=[

@@ -14,7 +14,8 @@ class MAFactor(Factor):
         具有趋势的特性，它比较平稳，不像日K线会起起落落地震荡
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
-        data[self.name] = cm.ma(data, N=n)
+        data[self.factor_name] = cm.ma(data, N=n)
 
         return data

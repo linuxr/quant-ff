@@ -15,6 +15,7 @@ class RMIFactor(Factor):
         将 RSI 中的动量与前一天价格之差CLOSE-REF(CLOSE,1)项改为了与前四天价格之差 CLOSE-REF(CLOSE,4)
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["sma1"] = cm.ref(data, N=4)
         data["sma1"] = data.apply(
@@ -24,7 +25,9 @@ class RMIFactor(Factor):
 
         data["sma2"] = cm.ref(data, N=1)
         data["sma2"] = abs(data["close"] - data["sma2"])
-        data[self.name] = cm.sma(data, "sma1", n, 1) / cm.sma(data, "sma2", n, 1) * 100
+        data[self.factor_name] = (
+            cm.sma(data, "sma1", n, 1) / cm.sma(data, "sma2", n, 1) * 100
+        )
 
         data = data.drop(columns=["sma1", "sma2"])
 

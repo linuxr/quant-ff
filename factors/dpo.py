@@ -14,9 +14,10 @@ class DPOFactor(Factor):
         当前价格与延迟的移动平均线的差值
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["close-ma"] = cm.ma(data, N=n)
-        data[self.name] = data["close"] - cm.ref(data, "close-ma", n // 2 + 1)
+        data[self.factor_name] = data["close"] - cm.ref(data, "close-ma", n // 2 + 1)
 
         data = data.drop(columns=["close-ma"])
 

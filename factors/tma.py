@@ -14,9 +14,10 @@ class TMAFactor(Factor):
         与其他的均线类似，不同的是，TMA 则赋予考虑的时间段内时间靠中间的价格更高的权重
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["close-ma"] = cm.ma(data, N=n)
-        data[self.name] = cm.ma(data, "close-ma", n)
+        data[self.factor_name] = cm.ma(data, "close-ma", n)
 
         data = data.drop(columns=["close-ma"])
 

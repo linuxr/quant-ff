@@ -14,6 +14,7 @@ class WADFactor(Factor):
         是一个筑底指标
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-close"] = cm.ref(data, N=1)
         data["trh"] = data.apply(
@@ -36,8 +37,8 @@ class WADFactor(Factor):
             lambda z: 0 if z["close"] == z["ref-close"] else z["ad"],
             axis=1,
         )
-        data[self.name] = cm.cumsum(data, "ad")
-        data[f"{self.name}-MA"] = cm.ma(data, self.name, n)
+        data[self.factor_name] = cm.cumsum(data, "ad")
+        data[f"{self.factor_name}-MA"] = cm.ma(data, self.factor_name, n)
 
         data = data.drop(columns=["ref-close", "trh", "trl", "ad"])
 

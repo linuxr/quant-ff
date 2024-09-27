@@ -14,6 +14,7 @@ class NVIFactor(Factor):
         均线的一种，相比于普通均线有着更低的延迟性
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-volume"] = cm.ref(data, "volume", 1)
         data["ref-close"] = cm.ref(data, "close", 1)
@@ -27,8 +28,8 @@ class NVIFactor(Factor):
             axis=1,
         )
         data.loc[0, "nvi-inc"] = 100
-        data[self.name] = cm.cumprod(data, "nvi-inc")
-        data[f"{self.name}-MA"] = cm.ma(data, "NVI", n)
+        data[self.factor_name] = cm.cumprod(data, "nvi-inc")
+        data[f"{self.factor_name}-MA"] = cm.ma(data, "NVI", n)
 
         data = data.drop(columns=["ref-volume", "ref-close", "nvi-inc"])
 

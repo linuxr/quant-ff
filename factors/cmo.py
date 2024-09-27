@@ -14,6 +14,7 @@ class CMOFactor(Factor):
         用过去N天的价格上涨量和价格下跌量得到，可以看作RSI指标的变形
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-close"] = cm.ref(data, N=1)
         data["max-su"] = data.apply(
@@ -26,7 +27,9 @@ class CMOFactor(Factor):
         )
         data["su"] = cm.sum(data, "max-su", n)
         data["sd"] = cm.sum(data, "max-sd", n)
-        data[self.name] = (data["su"] - data["sd"]) / (data["su"] + data["sd"]) * 100
+        data[self.factor_name] = (
+            (data["su"] - data["sd"]) / (data["su"] + data["sd"]) * 100
+        )
 
         data = data.drop(columns=["ref-close", "max-su", "max-sd", "su", "sd"])
 

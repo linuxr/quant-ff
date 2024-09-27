@@ -14,6 +14,7 @@ class CRFactor(Factor):
         与 AR、BR 类似。CR 通过比较最高价、最低价和典型价格来衡量市场人气
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["typ"] = (data["high"] + data["low"] + data["close"]) / 3
         data["ref-typ"] = cm.ref(data, "typ", 1)
@@ -25,7 +26,7 @@ class CRFactor(Factor):
             lambda z: max(z["ref-typ"] - z["low"], 0),
             axis=1,
         )
-        data[self.name] = 100 * cm.sum(data, "h", n) / cm.sum(data, "l", n)
+        data[self.factor_name] = 100 * cm.sum(data, "h", n) / cm.sum(data, "l", n)
 
         data = data.drop(columns=["typ", "ref-typ", "h", "l"])
 

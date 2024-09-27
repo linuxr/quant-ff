@@ -14,6 +14,7 @@ class VRAMTFactor(Factor):
         与 VR 指标（Volume Ratio）一样，只是把其中的成交量替换成了成交额
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-close"] = cm.ref(data, N=1)
         data["av"] = data.apply(
@@ -32,7 +33,7 @@ class VRAMTFactor(Factor):
         data["avs"] = cm.sum(data, "av", n)
         data["bvs"] = cm.sum(data, "bv", n)
         data["cvs"] = cm.sum(data, "cv", n)
-        data[self.name] = (data["avs"] + data["cvs"] / 2) / (
+        data[self.factor_name] = (data["avs"] + data["cvs"] / 2) / (
             data["bvs"] + data["cvs"] / 2
         )
 

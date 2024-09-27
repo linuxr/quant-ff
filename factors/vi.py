@@ -15,6 +15,7 @@ class VIFactor(Factor):
         用当前当前高价与前一天低价和当前低价与前一天高价的差来衡量价格变化
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-close"] = cm.ref(data, N=1)
         data["tr"] = data.apply(
@@ -31,8 +32,8 @@ class VIFactor(Factor):
         data["sumneg"] = cm.sum(data, "vmneg", n)
         data["trsum"] = cm.sum(data, "tr", n)
 
-        data[f"{self.name}+"] = data["sumpos"] / data["trsum"]
-        data[f"{self.name}-"] = data["sumneg"] / data["trsum"]
+        data[f"{self.factor_name}+"] = data["sumpos"] / data["trsum"]
+        data[f"{self.factor_name}-"] = data["sumneg"] / data["trsum"]
 
         data = data.drop(
             columns=[

@@ -14,6 +14,7 @@ class PVIFactor(Factor):
         成交量升高的交易日的价格变化百分比的累积
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
         data["ref-vol"] = cm.ref(data, "volume", 1)
         data["ref-close"] = cm.ref(data, N=1)
@@ -25,8 +26,8 @@ class PVIFactor(Factor):
             ),
             axis=1,
         )
-        data[self.name] = cm.cumsum(data, "pvi-inc")
-        data[f"{self.name}-MA"] = cm.ma(data, self.name, n)
+        data[self.factor_name] = cm.cumsum(data, "pvi-inc")
+        data[f"{self.factor_name}-MA"] = cm.ma(data, self.name, n)
 
         data = data.drop(columns=["ref-vol", "ref-close", "pvi-inc"])
 

@@ -14,12 +14,13 @@ class WVADFactor(Factor):
         用价格信息对成交量加权的价量指标，用来比较开盘到收盘期间多空双方的力量
         """
         n = para[0]
+        self.factor_name = f"{self.name}_{str(para)}"
 
-        data[self.name] = (
+        data[self.factor_name] = (
             (data["close"] - data["open"])
             / (data["high"] - data["low"])
             * data["volume"]
         )
-        data[self.name] = cm.sum(data, self.name, n)
+        data[self.factor_name] = cm.sum(data, self.factor_name, n)
 
         return data
