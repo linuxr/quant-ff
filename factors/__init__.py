@@ -46,8 +46,6 @@ all = ["Factor"]
 
 
 def get_factor(name: str) -> Factor:
-    print(f"name={name}")
-    print("=========================")
     match name.upper():
         case "ADOSC":
             return ADOSCFactor(name=name)
