@@ -43,7 +43,7 @@ class ADXRFactor(Factor):
         data["tr1"] = abs(data["high"] - data["low"])
         data["tr2"] = abs(data["high"] - data["close"])
         data["tr3"] = abs(data["low"] - data["close"])
-        data["tr"] = cm.max_idc(data, "tr1", "tr2", "tr3")
+        data["tr"] = cm.max_col(data, "tr1", "tr2", "tr3")
         data["tr"] = cm.sum(data, "tr", n)
 
         data["DI+"] = data["pdm"] / data["tr"]
