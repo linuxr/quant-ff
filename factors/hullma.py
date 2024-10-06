@@ -20,7 +20,7 @@ class HULLMAFactor(Factor):
 
         import math
 
-        data[self.fctor_name] = cm.ema(data, "X", round(math.sqrt(n)))
+        data[self.factor_name] = cm.ema(data, "X", round(math.sqrt(n)))
 
         data = data.drop(columns=["X"])
 

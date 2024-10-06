@@ -92,7 +92,7 @@ from quant_ff.factors.pvi import PVIFactor
 from quant_ff.factors.pvo import PVOFactor
 from quant_ff.factors.pvt import PVTFactor
 
-from quant_ff.factors.qstick import QsitckFactor
+from quant_ff.factors.qstick import QstickFactor
 
 from quant_ff.factors.rccd import RCCDFactor
 from quant_ff.factors.reg import REGFactor
@@ -306,8 +306,8 @@ def get_factor(name: str) -> Factor:
             return PVOFactor(name=name)
         case "PVT":
             return PVTFactor(name=name)
-        case "QSITCK":
-            return QsitckFactor(name=name)
+        case "QSTICK":
+            return QstickFactor(name=name)
         case "RCCD":
             return RCCDFactor(name=name)
         case "REG":

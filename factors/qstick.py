@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class QsitckFactor(Factor):
+class QstickFactor(Factor):
     def signal(self, data: pd.DataFrame, para: list):
         """
         通过比较收盘价与开盘价来反映股价趋势的方向和强度
